@@ -17,4 +17,11 @@ public class RankingService {
             new RankingAtivoDTO("SOL", 500.0, 450.0, -10.0)
         );
     }
+
+    public double calcularPorcentagemLucro(double precoMedioCompra, double precoAtual) {
+        if (precoMedioCompra <= 0) {
+            return 0.0; // Evita divisão por zero ou erro matemático
+        }
+        return ((precoAtual - precoMedioCompra) / precoMedioCompra) * 100.0;
+    }
 }
