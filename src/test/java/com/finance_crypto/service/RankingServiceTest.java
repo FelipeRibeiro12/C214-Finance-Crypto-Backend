@@ -12,6 +12,44 @@ class RankingServiceTest {
     private final RankingService rankingService = new RankingService();
 
     @Test
+    void deveCalcularLucroCorretamenteQuandoPrecoAtualForMaior() {
+        double precoCompra = 100.0;
+        double precoAtual = 150.0;
+
+        double resultado = rankingService.calcularPorcentagemLucro(precoCompra, precoAtual);
+
+        assertEquals(50.0, resultado, "O lucro deveria ser de 50%");
+    }
+
+    @Test
+    void deveCalcularPrejuizoCorretamenteQuandoPrecoAtualForMenor() {
+        double precoCompra = 100.0;
+        double precoAtual = 80.0;
+
+        double resultado = rankingService.calcularPorcentagemLucro(precoCompra, precoAtual);
+
+        assertEquals(-20.0, resultado, "O prejuízo deveria ser de -20%");
+    }
+
+    @Test
+    void deveRetornarZeroQuandoPrecoCompraForInvalido() {
+        double precoCompra = 0.0;
+        double precoAtual = 150.0;
+
+        double resultado = rankingService.calcularPorcentagemLucro(precoCompra, precoAtual);
+
+        assertEquals(0.0, resultado, "Deve retornar 0 para evitar divisão por zero");
+    }
+
+    @Test
+    void deveRetornarListaDeRankingPreenchida() {
+        List<RankingAtivoDTO> ranking = rankingService.obterRankingCalculado();
+
+        assertNotNull(ranking, "A lista de ranking não pode ser nula");
+        assertFalse(ranking.isEmpty(), "A lista de ranking não deve estar vazia");
+    }
+
+    @Test
     void deveRetornarTresAtivosNoRanking() {
         List<RankingAtivoDTO> ranking = rankingService.obterRankingCalculado();
 

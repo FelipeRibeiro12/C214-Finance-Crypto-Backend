@@ -25,4 +25,12 @@ public class RankingService {
                 .filter(ativo -> ativo.getPercentualLucro() < 0)
                 .toList();
     }
+
+    public double calcularPorcentagemLucro(double precoMedioCompra, double precoAtual) {
+        if (precoMedioCompra <= 0) {
+            return 0.0;
+        }
+
+        return ((precoAtual - precoMedioCompra) / precoMedioCompra) * 100.0;
+    }
 }
