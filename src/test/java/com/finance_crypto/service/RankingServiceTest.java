@@ -36,4 +36,14 @@ class RankingServiceTest {
 
         assertTrue(existePrejuizo);
     }
+
+    @Test
+    void deveRetornarSomenteAtivosComPrejuizo() {
+        List<RankingAtivoDTO> ativosComPrejuizo = rankingService.obterAtivosComPrejuizo();
+
+        assertNotNull(ativosComPrejuizo);
+        assertEquals(1, ativosComPrejuizo.size());
+        assertEquals("SOL", ativosComPrejuizo.get(0).getSimbolo());
+        assertEquals(-10.0, ativosComPrejuizo.get(0).getPercentualLucro(), 0.001);
+    }
 }
