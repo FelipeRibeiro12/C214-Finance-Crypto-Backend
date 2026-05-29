@@ -1,0 +1,25 @@
+# Sobe o Jenkins localmente para desenvolvimento e demonstração.
+#
+# Como usar:
+#   docker compose -f docker-compose.jenkins.yml up -d
+#   Acesse: http://localhost:9090
+#   Senha inicial: docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+
+services:
+
+  jenkins:
+    image: jenkins/jenkins:lts-jdk21
+    container_name: jenkins
+    user: root                          # necessário para acessar o socket do Docker
+    ports:
+      - "9090:8080"                     # UI do Jenkins (8080 já usada pela app)
+      - "50000:50000"                   # agentes Jenkins
+    volumes:
+      - jenkins_home:/var/jenkins_home  # persiste configurações e jobs
+      - /var/run/docker.sock:/var/run/docker.sock  # permite rodar Docker dentro do Jenkins
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
